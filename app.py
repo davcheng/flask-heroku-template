@@ -1,7 +1,6 @@
-from flask import Flask, g, jsonify
+from flask import Flask, g, render_template, request, url_for, jsonify
 import sqlite3
-from flask import render_template, request, redirect, url_for, abort
-from math import ceil
+
 
 app = Flask(__name__)
 
@@ -48,13 +47,8 @@ app.jinja_env.globals['url_for_pages'] = url_for_pages
 
 # ------------------------------
 
-
-# def get_widgets():
-
-
-
 # index router
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     # create db connection
     conn = get_db()
@@ -68,14 +62,16 @@ def index():
 # add a widget to the database
 @app.route('/add_widget', methods=['POST'])
 def add_widget():
-    # create db connection and store the squawk
+    # create db connection and store the widget
     conn = get_db()
+    # execute query to store widget data from the request form from index.html
     conn.execute('INSERT INTO widgets (WIDGET_NAME) VALUES (?)', [request.form['widget_name']])
+    # save changes
     conn.commit()
     return redirect(url_for('index'))
 
 
-# Basic API
+# basic API
 @app.route('/api/widget', methods=['GET'])
 def list_widgets():
     # create db connection
