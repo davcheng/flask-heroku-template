@@ -1,16 +1,9 @@
-# Time-webapp
+# Flask Heroku App Template
 
-Homework assignment: Build a web app that prints out the number of milliseconds since the start of January 1st, 1970, Coordinated Universal Time (UTC). (50%)
+Starter Flask App with necessary deployment files required for Heroku
 
-Build it using Flask.
-
-Deploy to Heroku.
-
-The site must be available at `<NET_ID>-time.herokuapp.com`. In other words, the third-level domain needs to be prefixed with your NetID. (50%)
-
-
-how to push a flask app to heroku:
-1. create requirements.txt
+Heroku Deployment Files Required
+1. Create requirements.txt
 include: 
 	
 	```
@@ -21,19 +14,19 @@ include:
 	gunicorn==19.6
 	```
 
-2. create a Procfile
+2. Create a Procfile
 
 	```
 	web: gunicorn [app name, e.g., if main.py, use "main"]:app
 	```
 
-3. create heroku app
+3. Create heroku app
 
 	```
-	heroku create [app name, more importantly [WHATEVER YOU TYPE].heroku.com]
+	heroku create [app name].heroku.com
 	```
 
-4. deply code
+4. Deply code
 
 	```
 	git push heroku master
