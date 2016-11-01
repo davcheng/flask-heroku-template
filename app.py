@@ -68,12 +68,9 @@ def index():
 # add a widget to the database
 @app.route('/add_widget', methods=['POST'])
 def add_widget():
-    # server side validation of squawk length
-    if len(request.form['squawk_text']) > 140:
-        abort(400)
     # create db connection and store the squawk
     conn = get_db()
-    conn.execute('INSERT INTO squawks (squawk_text) VALUES (?)', [request.form['squawk_text']])
+    conn.execute('INSERT INTO widgets (WIDGET_NAME) VALUES (?)', [request.form['widget_name']])
     conn.commit()
     return redirect(url_for('index'))
 
@@ -84,7 +81,7 @@ def list_widgets():
     # create db connection
     conn = get_db()
     # create cursor object with squawk query
-    cursor_object = conn.execute('SELECT * from widget order by id desc')
+    cursor_object = conn.execute('SELECT * FROM widgets ORDER BY id DESC')
     # iterate over all widgets and store
     widgets = cursor_object.fetchall()
     return jsonify(widgets)

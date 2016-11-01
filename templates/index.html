@@ -4,7 +4,7 @@
     <form action="{{ url_for('add_widget') }}" method="post">
       <div class="form-group">
         <label for="widget_name">name of widget?</label>
-        <input type="text" class="form-control" name="widget_text" pattern=".{1,140}" size="100" placeholder="Squawk" oninvalid="alert('140 characters or fewer')">
+        <input type="text" class="form-control" name="widget_name" pattern=".{1,140}" size="100" placeholder="Placeholder Text" oninvalid="alert('140 characters or fewer')">
       </div>
       <input type="submit" class="btn btn-default" value="submit">
     </form>
