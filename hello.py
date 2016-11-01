@@ -5,9 +5,7 @@ from math import ceil
 
 app = Flask(__name__)
 
-# set number of squawks per page
-PER_PAGE = 20
-
+#--------------------------------
 
 # Set up and initialize db
 def get_db():
@@ -38,23 +36,40 @@ def close_connection(exception):
     db = getattr(g, 'sqlite_db', None)
     if db is not None:
         db.close()
+
 # ------------------------------
 
+# url generator
+def url_for_pages(page):
+    args = request.view_args.copy()
+    args['page'] = page
+    return url_for(request.endpoint, **args)
+app.jinja_env.globals['url_for_pages'] = url_for_pages
+
+# ------------------------------
+
+
+# def get_widgets():
+
+
+
+# index router
 @app.route('/')
 def index():
-    data = get_data()
-    return render_template('index.html', data=data)
+    # create db connection
+    conn = get_db()
+    # create cursor object with squawk query
+    cursor_object = conn.execute('SELECT ID, WIDGET_NAME FROM widgets ORDER BY id DESC')
+    # iterate over all squawks and store
+    widgets = cursor_object.fetchall()
+    if not widgets:
+        abort(404)
+    return render_template('index.html', widgets=widgets)
 
-def get_time():
-    milli = time.time() * 1000
-    # format to un-scientific notation it
-    unsci_milli = '{:.0f}'.format(milli)
-    return unsci_milli
 
-
-# add to database
-@app.route('/add_data', methods=['POST'])
-def add_data():
+# add a widget to the database
+@app.route('/add_widget', methods=['POST'])
+def add_widget():
     # server side validation of squawk length
     if len(request.form['squawk_text']) > 140:
         abort(400)
@@ -65,16 +80,16 @@ def add_data():
     return redirect(url_for('root'))
 
 
-# TODO create a JSON API that lists all possible squawks
-@app.route('/api/squawks', methods=['GET'])
-def list_squawks():
+# Basic API
+@app.route('/api/widget', methods=['GET'])
+def list_widgets():
     # create db connection
     conn = get_db()
     # create cursor object with squawk query
-    cursor_object = conn.execute('SELECT * from squawks order by id desc')
-    # iterate over all squawks and store
-    squawks = cursor_object.fetchall()
-    return jsonify(squawks)
+    cursor_object = conn.execute('SELECT * from widget order by id desc')
+    # iterate over all widgets and store
+    widgets = cursor_object.fetchall()
+    return jsonify(widgets)
 
 
 if __name__ == '__main__':

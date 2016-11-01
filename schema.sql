@@ -1,6 +1,6 @@
 -- TODO change this
-DROP TABLE IF EXISTS squawks;
-CREATE TABLE squawks (
-	id integer primary key autoincrement,
-	squawk_text text not null
+DROP TABLE IF EXISTS widgets;
+CREATE TABLE widgets (
+	ID integer primary key autoincrement,
+	WIDGET_NAME text not null
 	);
