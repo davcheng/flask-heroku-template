@@ -4,6 +4,18 @@ Starter Flask App with necessary deployment files required for Heroku
 
 ## Flask App
 
+**1. login to virtual environment**
+
+
+**2. Initialize DB**
+```
+FLASK_APP=app.py flask initdb
+```
+
+**3. Run app**
+```
+FLASK_APP=app.py FLASK_DEBUG=1 flask run --host=0.0.0.0
+```
 
 
 ## Heroku Deployment Files Required

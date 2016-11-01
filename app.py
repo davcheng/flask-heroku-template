@@ -62,8 +62,6 @@ def index():
     cursor_object = conn.execute('SELECT ID, WIDGET_NAME FROM widgets ORDER BY id DESC')
     # iterate over all squawks and store
     widgets = cursor_object.fetchall()
-    if not widgets:
-        abort(404)
     return render_template('index.html', widgets=widgets)
 
 
@@ -77,7 +75,7 @@ def add_widget():
     conn = get_db()
     conn.execute('INSERT INTO squawks (squawk_text) VALUES (?)', [request.form['squawk_text']])
     conn.commit()
-    return redirect(url_for('root'))
+    return redirect(url_for('index'))
 
 
 # Basic API
