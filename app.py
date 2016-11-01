@@ -48,7 +48,7 @@ app.jinja_env.globals['url_for_pages'] = url_for_pages
 # ------------------------------
 
 # index router
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     # create db connection
     conn = get_db()
